@@ -1,19 +1,10 @@
-#ifdef INCLUDED_MAIN
-signed main() {
-    inl(a,b,d);
-    ll x=(b-a)/d;
-    rep(i,x+1){
-        print_(a+i*d);
-    }
-    cout << endl;
-}
-
-#else
+#line 2 "library/template/template.hpp"
 #include <bits/stdc++.h>
-using namespace std;
+#line 3 "library/template/macro.hpp"
 #pragma GCC target("avx2")
 #pragma GCC optimize("O3")
 #pragma GCC optimize("unroll-loops")
+using namespace std;
 #if __has_include(<atcoder/all>)
 #include <atcoder/all>
 using namespace atcoder;
@@ -130,8 +121,6 @@ const string ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const string abc="abcdefghijklmnopqrstuvwxyz";
 #define gcd __gcd
 #define pb push_back
-#define in(n) insert(n)
-#define mp make_pair
 template<class T> using pq = priority_queue<T>;
 template<class T> using pqr = priority_queue<T, vector<T>, greater<T>>;
 #define lb(v, k) (lower_bound((v).begin(), (v).end(), (k)) - v.begin())
@@ -141,9 +130,6 @@ template<class T> using pqr = priority_queue<T, vector<T>, greater<T>>;
 #define elif else if
 #define updiv(n,x) (n + x - 1) / x
 #define rounddiv(n,x) (ll)((double)(n)/(double)(x)+0.5)
-#define print(n) cout << (n) << endl
-#define _print(n) cout << " " << (n) << endl
-#define print_(n) cout << (n) << " "
 #define fix(n) fixed << setprecision(n)
 template<class... T>
 //3つ以上でも使えるmax,min
@@ -158,6 +144,76 @@ template <typename T>
 inline bool chmax(T &a, T b) { return ((a < b) ? (a = b, true) : (false)); }
 template <typename T>
 inline bool chmin(T &a, T b) { return ((a > b) ? (a = b, true) : (false)); }
+const ll mod=998244353;
+const ll MOD=1000000007;
+const ld PI=3.141592653589793;
+const vi dx4={0,-1,0,1};
+const vi dy4={1,0,-1,0};
+const vi dx8={1,0,-1,0,1,-1,1,-1};
+const vi dy8={0,1,0,-1,1,-1,-1,1};
+const vi dx6={1,0,-1,0,1,-1};
+const vi dy6={0,1,0,-1,1,-1};
+const int inf = INT_MAX / 2;
+const ll INF= 1LL << 60;
+#line 6 "library/template/inout.hpp"
+#include <type_traits>
+using namespace std;
+
+template <class Char, std::enable_if_t<std::is_same_v<Char, char>, int> = 0>
+inline Char in() { return getchar_unlocked(); }
+template <class String, std::enable_if_t<std::is_same_v<String, std::string>, int> = 0>
+inline std::string in() {
+    char c; do { c = getchar_unlocked(); } while (isspace(c));
+    std::string s;
+    do { s.push_back(c); } while (not isspace(c = getchar_unlocked()));
+    return s;
+}
+template <class Integer, std::enable_if_t<std::is_integral_v<Integer> and not std::is_same_v<Integer, char>, int> = 0>
+inline Integer in() {
+    char c; do { c = getchar_unlocked(); } while (isspace(c));
+    if (std::is_signed<Integer>::value and c == '-') return -in<Integer>();
+    Integer n = 0;
+    do { n = n * 10 + c - '0'; } while (not isspace(c = getchar_unlocked()));
+    return n;
+}
+
+template <class Char, std::enable_if_t<std::is_same_v<Char, char>, int> = 0>
+inline void out(char c) { putchar_unlocked(c); }
+template <class String, std::enable_if_t<std::is_same_v<String, std::string>, int> = 0>
+inline void out(const std::string & s) { for (char c : s) putchar_unlocked(c); }
+template <class Integer, std::enable_if_t<std::is_integral_v<Integer>, int> = 0>
+inline void out(Integer n) {
+    char s[20];
+    int i = 0;
+    if (std::is_signed<Integer>::value and n < 0) { putchar_unlocked('-'); n *= -1; }
+    do { s[i ++] = n % 10; n /= 10; } while (n);
+    while (i) putchar_unlocked(s[-- i] + '0');
+}
+#define ini(...) int __VA_ARGS__; input(__VA_ARGS__);
+#define inl(...) long long __VA_ARGS__; input(__VA_ARGS__);
+#define ins(...) string __VA_ARGS__; input(__VA_ARGS__);
+#define inc(...) char __VA_ARGS__; input(__VA_ARGS__);
+#define ing(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);name[b].pb(a);}
+#define ing_on(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);}//有向
+#define ing_cost(name,size,n) Graph_cost name(size); rep(i,n){inl(a,b,c);a--;b--;name[a].pb({b,c});name[b].pb({a,c});}//コスト付き
+#define in1(s) for (int i = 0; i < (int)s.size();i++) in(s[i]);
+#define in2(s, t) for (int i = 0; i < (int)s.size(); i++) in(s[i], t[i]);
+#define in3(s, t, u) for (int i = 0; i < (int)s.size(); i++) in(s[i], t[i], u[i]);
+#define in4(s, t, u, v) for (int i = 0; i < (int)s.size(); i++) in(s[i], t[i], u[i], v[i]);
+void input() {}
+template <typename T, class... U>
+void input(T &t, U &...u) {
+    t = in<T>();
+    input(u...);
+}
+void print() { out<char>('\n'); }
+template <typename T, class... U, char sep = ' '>
+void print(const T &t, const U &...u) {
+    out<T>(t);
+    if (sizeof...(u)) out<char>(sep);
+    print(u...);
+}
+#line 2 "library/template/func.hpp"
 //XORshift
 unsigned int randInt() {
     static unsigned int tx = 123456789, ty=362436069, tz=521288629, tw=88675123;
@@ -186,231 +242,6 @@ vector<T> compress(vector<T> &vec){
     }
     return vals;
 }
-const ll mod=998244353;
-const ll MOD=1000000007;
-const ld PI=3.141592653589793;
-const vi dx4={0,-1,0,1};
-const vi dy4={1,0,-1,0};
-const vi dx8={1,0,-1,0,1,-1,1,-1};
-const vi dy8={0,1,0,-1,1,-1,-1,1};
-const vi dx6={1,0,-1,0,1,-1};
-const vi dy6={0,1,0,-1,1,-1};
-const int inf = INT_MAX / 2;
-const ll INF= 1LL << 60;
-#define ini(...) int __VA_ARGS__; IN(__VA_ARGS__)
-#define inl(...) long long __VA_ARGS__; IN(__VA_ARGS__)
-#define ins(...) string __VA_ARGS__; IN(__VA_ARGS__)
-#define inc(...) char __VA_ARGS__; IN(__VA_ARGS__)
-#define ing(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);name[b].pb(a);}
-#define ing_on(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);}//有向
-#define ing_cost(name,size,n) Graph_cost name(size); rep(i,n){inl(a,b,c);a--;b--;name[a].pb({b,c});name[b].pb({a,c});}//コスト付き
-#define in1(s) for (int i = 0; i < (int)s.size();i++) IN(s[i]);
-#define in2(s, t) for (int i = 0; i < (int)s.size(); i++) IN(s[i], t[i]);
-#define in3(s, t, u) for (int i = 0; i < (int)s.size(); i++) IN(s[i], t[i], u[i]);
-#define in4(s, t, u, v) for (int i = 0; i < (int)s.size(); i++) IN(s[i], t[i], u[i], v[i]);
-//pair_out
-template <typename T, typename U>
-ostream &operator<<(ostream &os, const pair<T, U> &p) {
-    os << p.first << " " << p.second;
-    return os;
-}
-//pair_in
-template <typename T, typename U>
-istream &operator>>(istream &is, pair<T, U> &p) {
-    is >> p.first >> p.second;
-    return is;
-}
-//vector_out
-template <typename T>
-ostream &operator<<(ostream &os, const vector<T> &v) {
-    int s = (int)v.size();
-    for (int i = 0; i < s; i++) os << (i ? " " : "") << v[i];
-    return os;
-}
-//vector_in
-template <typename T>
-istream &operator>>(istream &is, vector<T> &v) {
-    for (auto &x : v) is >> x;
-    return is;
-}
-//多倍長整数の入力・出力(boostがAtcoder内で遅いため)
-//__int128_t_in
-istream &operator>>(istream &is, __int128_t &x) {
-    string S;
-    is >> S;
-    x = 0;
-    int flag = 0;
-    for (auto &c : S) {
-        if (c == '-') {
-            flag = true;
-            continue;
-        }
-        x *= 10;
-        x += c - '0';
-    }
-    if (flag) x = -x;
-    return is;
-}
-//__uint128_t_in
-istream &operator>>(istream &is, __uint128_t &x) {
-    string S;
-    is >> S;
-    x = 0;
-    for (auto &c : S) {
-        x *= 10;
-        x += c - '0';
-    }
-    return is;
-}
-//__int128_t_out
-ostream &operator<<(ostream &os, __int128_t x) {
-    if (x == 0) return os << 0;
-    if (x < 0) os << '-', x = -x;
-    string S;
-    while (x) S.push_back('0' + x % 10), x /= 10;
-    reverse(begin(S), end(S));
-    return os << S;
-}
-//__uint128_t_out
-ostream &operator<<(ostream &os, __uint128_t x) {
-    if (x == 0) return os << 0;
-    string S;
-    while (x) S.push_back('0' + x % 10), x /= 10;
-    reverse(begin(S), end(S));
-    return os << S;
-}
-//vector<vector>_out
-template <typename T>
-ostream &operator<<(ostream &os, const vector<vector<T>> &v)
-{
-    for (int i = 0; i < (int)v.size(); i++)
-    {
-        os << v[i] << endl;
-    }
-    return os;
-}
-//vector<vector<vector>>_out
-template <typename T>
-ostream &operator<<(ostream &os, const vector<vector<vector<T>>> &v)
-{
-    for (int i = 0; i < (int)v.size(); i++)
-    {
-        os << "i = " << i << endl;
-        os << v[i];
-    }
-    return os;
-}
-//map_out
-/*
-template <typename T, typename S>
-ostream &operator<<(ostream &os, const map<T, S> &mp)
-{
-    for ((auto &[key, val]) : mp)
-    {
-        os << key << ":" << val << " ";
-    }
-    return os;
-}
-*/
-//set_out
-template <typename T>
-ostream &operator<<(ostream &os, const set<T> &st)
-{
-    auto itr = st.begin();
-    for (int i = 0; i < (int)st.size(); i++)
-    {
-        os << *itr << (i + 1 != (int)st.size() ? " " : "");
-        itr++;
-    }
-    return os;
-}
-//multiset_out
-template <typename T>
-ostream &operator<<(ostream &os, const multiset<T> &st)
-{
-    auto itr = st.begin();
-    for (int i = 0; i < (int)st.size(); i++)
-    {
-        os << *itr << (i + 1 != (int)st.size() ? " " : "");
-        itr++;
-    }
-    return os;
-}
-//queue_out
-template <typename T>
-ostream &operator<<(ostream &os, queue<T> q)
-{
-    while (q.size())
-    {
-        os << q.front() << " ";
-        q.pop();
-    }
-    return os;
-}
-//deque_out
-template <typename T>
-ostream &operator<<(ostream &os, deque<T> q)
-{
-    while (q.size())
-    {
-        os << q.front() << " ";
-        q.pop_front();
-    }
-    return os;
-}
-//stack_out
-template <typename T>
-ostream &operator<<(ostream &os, stack<T> st)
-{
-    while (st.size())
-    {
-        os << st.top() << " ";
-        st.pop();
-    }
-    return os;
-}
-//priority_queue_out
-template <class T, class Container, class Compare>
-ostream &operator<<(ostream &os, priority_queue<T, Container, Compare> pq)
-{
-    while (pq.size())
-    {
-        os << pq.top() << " ";
-        pq.pop();
-    }
-    return os;
-}
-void IN() {}
-template <typename T, class... U>
-void IN(T &t, U &...u) {
-    cin >> t;
-    IN(u...);
-}
-void OUT() { cout << "\n"; }
-template <typename T, class... U, char sep = ' '>
-void OUT(const T &t, const U &...u) {
-    cout << t;
-    if (sizeof...(u)) cout << sep;
-    OUT(u...);
-}
-//ただの変数
-#define COUT(x) cout << #x << " = " << (x) << " (L" << __LINE__ << ")" << endl
-//pair
-template<class T1, class T2> ostream& operator << (ostream &s, pair<T1,T2> P)
-{ return s << '<' << P.first << ", " << P.second << '>'; }
-//vector
-template<class T> ostream& operator << (ostream &s, vector<T> P)
-{ for (int i = 0; i < P.size(); ++i) { if (i > 0) { s << " "; } s << P[i]; } return s; }
-//vector(2次元)
-template<class T> ostream& operator << (ostream &s, vector<vector<T> > P)
-{ for (int i = 0; i < P.size(); ++i) { s << endl << P[i]; } return s << endl; }
-//set
-#define EACH(i, s) for (__typeof__((s).begin()) i = (s).begin(); i != (s).end(); ++i)
-template<class T> ostream& operator << (ostream &s, set<T> P)
-{ EACH(it, P) { s << "<" << *it << "> "; } return s << endl; }
-//map
-template<class T1, class T2> ostream& operator << (ostream &s, map<T1,T2> P)
-{ EACH(it, P) { s << "<" << it->first << "->" << it->second << "> "; } return s << endl; }
 //繰り返し二乗法(modなし)
 ull mypow(ull a, ull b) {
     if(a==0) {
@@ -794,6 +625,7 @@ string dec2bin(ll n) {
         r += (n % 2LL == 0LL ? "0" : "1");
         n /= 2LL;
     }
+    reverse(all(r));
     return r;
 }
 //2進数→10進数
@@ -1140,9 +972,12 @@ struct RollingHash {
         return low;
     }
 };
-
-
-#define INCLUDED_MAIN
-#include __FILE__
-
-#endif
+#line 6 "library/template/template.hpp"
+using namespace std;
+#line 2 "code.cpp"
+signed main() {
+    inl(a,b,d);
+    ll x= (b-a)/d;
+    rep(i,x+1) cout << i*d+a << " ";
+    print();
+}
