@@ -198,10 +198,10 @@ inline void out(Integer n) {
 #define ing(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);name[b].pb(a);}
 #define ing_on(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);}//有向
 #define ing_cost(name,size,n) Graph_cost name(size); rep(i,n){inl(a,b,c);a--;b--;name[a].pb({b,c});name[b].pb({a,c});}//コスト付き
-#define in1(s) for (int i = 0; i < (int)s.size();i++) in(s[i]);
-#define in2(s, t) for (int i = 0; i < (int)s.size(); i++) in(s[i], t[i]);
-#define in3(s, t, u) for (int i = 0; i < (int)s.size(); i++) in(s[i], t[i], u[i]);
-#define in4(s, t, u, v) for (int i = 0; i < (int)s.size(); i++) in(s[i], t[i], u[i], v[i]);
+#define in1(s) for (int i = 0; i < (int)s.size();i++) input(s[i]);
+#define in2(s, t) for (int i = 0; i < (int)s.size(); i++) input(s[i], t[i]);
+#define in3(s, t, u) for (int i = 0; i < (int)s.size(); i++) input(s[i], t[i], u[i]);
+#define in4(s, t, u, v) for (int i = 0; i < (int)s.size(); i++) input(s[i], t[i], u[i], v[i]);
 void input() {}
 template <typename T, class... U>
 void input(T &t, U &...u) {
@@ -620,14 +620,13 @@ pair<long long, long long> PellMul(pair<long long, long long> p, pair<long long,
     long long s = p.first * q.second + p.second * q.first;
     return make_pair(f, s);
 }
-//10進数→2進数
+//10進数→2進数(順番が逆)
 string dec2bin(ll n) {
     string r;
     while (n != 0LL) {
         r += (n % 2LL == 0LL ? "0" : "1");
         n /= 2LL;
     }
-    reverse(all(r));
     return r;
 }
 //2進数→10進数
@@ -977,8 +976,12 @@ struct RollingHash {
 #line 6 "library/template/template.hpp"
 using namespace std;
 #line 2 "code.cpp"
+#if __has_include(<atcoder/all>)
+#include<atcoder/all>
+using namespace atcoder;
+#endif
 signed main() {
-    inl(a);
-    rep(i,a) cout << 10;
-    print(1); 
+    inl(n);
+    rep(i,n) cout << 10;
+    print(1);
 }
