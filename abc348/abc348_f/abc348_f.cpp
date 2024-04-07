@@ -13,7 +13,7 @@ signed main() {
     std::cin.tie(nullptr);
     int n,m;
     cin >> n >> m;
-    vector<vector<int>> a(n,vector<int>(m));
+    vector<vector<long long>> a(n,vector<long long>(m));
     rep(i,n) rep(j,m) cin >> a[i][j];
     int ans=0;
     rep(i,n){
