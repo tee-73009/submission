@@ -11,14 +11,14 @@ using namespace std;
 signed main() {
     ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int n,m;
+    long long n,m;
     cin >> n >> m;
     vector<vector<long long>> a(n,vector<long long>(m));
     rep(i,n) rep(j,m) cin >> a[i][j];
-    int ans=0;
+    long long ans=0;
     rep(i,n){
         rep(j,i+1,n){
-            int b=0;
+            long long b=0;
             rep(k,m){
                 b^=(a[i][k]==a[j][k]);
             }
