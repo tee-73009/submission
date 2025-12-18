@@ -1,0 +1,404 @@
+#include<bits/stdc++.h>
+using namespace std;
+#if __has_include(<atcoder/all>)
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
+using Mint = modint1000000007;
+using vm = vector<mint>;
+using vvm = vector<vm>;
+using vM = vector<Mint>;
+using vvM = vector<vM>;
+//pair_out
+template <typename T, typename U>
+ostream &operator<<(ostream &os, const pair<T, U> &p) {
+    os << p.first << " " << p.second;
+    return os;
+}
+//pair_in
+template <typename T, typename U>
+istream &operator>>(istream &is, pair<T, U> &p) {
+    is >> p.first >> p.second;
+    return is;
+}
+//vector_out
+template <typename T>
+ostream &operator<<(ostream &os, const vector<T> &v) {
+    int s = (int)v.size();
+    for (int i = 0; i < s; i++) os << (i ? " " : "") << v[i];
+    return os;
+}
+//vector_in
+template <typename T>
+istream &operator>>(istream &is, vector<T> &v) {
+    for (auto &x : v) is >> x;
+    return is;
+}
+//__int128_t_in
+istream &operator>>(istream &is, __int128_t &x) {
+    string S;
+    is >> S;
+    x = 0;
+    int flag = 0;
+    for (auto &c : S) {
+        if (c == '-') {
+            flag = true;
+            continue;
+        }
+        x *= 10;
+        x += c - '0';
+    }
+    if (flag) x = -x;
+    return is;
+}
+//__uint128_t_in
+istream &operator>>(istream &is, __uint128_t &x) {
+    string S;
+    is >> S;
+    x = 0;
+    for (auto &c : S) {
+        x *= 10;
+        x += c - '0';
+    }
+    return is;
+}
+//__int128_t_out
+ostream &operator<<(ostream &os, __int128_t x) {
+    if (x == 0) return os << 0;
+    if (x < 0) os << '-', x = -x;
+    string S;
+    while (x) S.push_back('0' + x % 10), x /= 10;
+    reverse(begin(S), end(S));
+    return os << S;
+}
+//__uint128_t_out
+ostream &operator<<(ostream &os, __uint128_t x) {
+    if (x == 0) return os << 0;
+    string S;
+    while (x) S.push_back('0' + x % 10), x /= 10;
+    reverse(begin(S), end(S));
+    return os << S;
+}
+//vector<vector>_out
+template <typename T>
+ostream &operator<<(ostream &os, const vector<vector<T>> &v)
+{
+    for (int i = 0; i < (int)v.size(); i++)
+    {
+        os << v[i] << endl;
+    }
+    return os;
+}
+//vector<vector<vector>>_out
+template <typename T>
+ostream &operator<<(ostream &os, const vector<vector<vector<T>>> &v)
+{
+    for (int i = 0; i < (int)v.size(); i++)
+    {
+        os << "i = " << i << endl;
+        os << v[i];
+    }
+    return os;
+}
+//map_out
+template <typename T, typename S>
+ostream &operator<<(ostream &os, const map<T, S> &m)
+{
+    for (auto &[key, val] : m)
+    {
+        os << key << ":" << val << " ";
+    }
+    return os;
+}
+//set_out
+template <typename T>
+ostream &operator<<(ostream &os, const set<T> &st)
+{
+    auto itr = st.begin();
+    for (int i = 0; i < (int)st.size(); i++)
+    {
+        os << *itr << (i + 1 != (int)st.size() ? " " : "");
+        itr++;
+    }
+    return os;
+}
+//multiset_out
+template <typename T>
+ostream &operator<<(ostream &os, const multiset<T> &st)
+{
+    auto itr = st.begin();
+    for (int i = 0; i < (int)st.size(); i++)
+    {
+        os << *itr << (i + 1 != (int)st.size() ? " " : "");
+        itr++;
+    }
+    return os;
+}
+//queue_out
+template <typename T>
+ostream &operator<<(ostream &os, queue<T> q)
+{
+    while (q.size())
+    {
+        os << q.front() << " ";
+        q.pop();
+    }
+    return os;
+}
+//deque_out
+template <typename T>
+ostream &operator<<(ostream &os, deque<T> q)
+{
+    while (q.size())
+    {
+        os << q.front() << " ";
+        q.pop_front();
+    }
+    return os;
+}
+//stack_out
+template <typename T>
+ostream &operator<<(ostream &os, stack<T> st)
+{
+    while (st.size())
+    {
+        os << st.top() << " ";
+        st.pop();
+    }
+    return os;
+}
+//priority_queue_out
+template <class T, class Container, class Compare>
+ostream &operator<<(ostream &os, priority_queue<T, Container, Compare> pq)
+{
+    while (pq.size())
+    {
+        os << pq.top() << " ";
+        pq.pop();
+    }
+    return os;
+}
+#if __has_include(<atcoder/all>)
+//998244353_in
+istream &operator>>(istream &a, mint &b){
+    long long tmp;
+    a >> tmp;
+    b = tmp;
+    return a;
+}
+//998244353_out
+ostream &operator<<(ostream &a, mint &b){
+    a << b.val();
+    return a;
+}
+//1000000007_in
+istream &operator>>(istream &a, Mint &b){
+    long long tmp;
+    a >> tmp;
+    b = tmp;
+    return a;
+}
+//1000000007_out
+ostream &operator<<(ostream &a, Mint &b){
+    a << b.val();
+    return a;
+}
+#endif
+#define ini(...) int __VA_ARGS__; input(__VA_ARGS__);
+#define inl(...) long long __VA_ARGS__; input(__VA_ARGS__);
+#define ins(...) string __VA_ARGS__; input(__VA_ARGS__);
+#define inc(...) char __VA_ARGS__; input(__VA_ARGS__);
+#define ing(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);name[b].pb(a);}
+#define ing_on(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);}//有向
+#define ing_cost(name,size,n) Graph_cost name(size); rep(i,n){inl(a,b,c);a--;b--;name[a].pb({b,c});name[b].pb({a,c});}//コスト付き
+#define in1(s) for (int i = 0; i < (int)s.size();i++) input(s[i]);
+#define in2(s, t) for (int i = 0; i < (int)s.size(); i++) input(s[i], t[i]);
+#define in3(s, t, u) for (int i = 0; i < (int)s.size(); i++) input(s[i], t[i], u[i]);
+#define in4(s, t, u, v) for (int i = 0; i < (int)s.size(); i++) input(s[i], t[i], u[i], v[i]);
+void input() {}
+template <typename T, class... U>
+void input(T &t, U &...u) {
+    cin >> t;
+    input(u...);
+}
+void print() { cout << "\n"; }
+template <typename T, class... U, char sep = ' '>
+void print(const T &t, const U &...u) {
+    cout << t;
+    if (sizeof...(u)) cout << sep;
+    print(u...);
+}
+#endif
+#define OVERLOAD_3(_1, _2, _3, name, ...) name
+#define REP1(i, n) for (auto i = std::decay_t<decltype(n)>{}; (i) < (n); ++(i))
+#define REP2(i, l, r) for (auto i = (l); (i) < (r); ++(i))
+#define rep(...) OVERLOAD_3(__VA_ARGS__, REP2, REP1)(__VA_ARGS__)
+#define RREP1(i, n) for (auto i = (n); (i) != (std::decay_t<decltype(n)>{}); --(i))
+#define RREP2(i, l, r) for (auto i = (l); (i) != (r); --(i))
+#define rrep(...) OVERLOAD_3(__VA_ARGS__, RREP2, RREP1)(__VA_ARGS__)
+#define rep_(i,a) rep(i,a.size())
+#define all(x) std::begin(x), std::end(x)
+#define rall(x) std::rbegin(x), std::rend(x)
+#define yesno(T) if(T){cout<<"yes"<<endl;}else{cout<<"no"<<endl;}
+#define YesNo(T) if(T){cout<<"Yes"<<endl;}else{cout<<"No"<<endl;}
+#define YESNO(T) if(T){cout<<"YES"<<endl;}else{cout<<"NO"<<endl;}
+#define fin(...) ({print(__VA_ARGS__); return 0; })
+#define break_with(...) ({ __VA_ARGS__; break; })
+#define continue_with(...) ({ __VA_ARGS__; continue; })
+using ll=long long;
+using ld=long double;
+using ull=unsigned long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using vi = vector<int>;
+using vll = vector<long long>;
+using vs = vector<string>;
+using vc = vector<char>;
+using vb = vector<bool>;
+using vvi = vector<vi>;
+using vvll = vector<vll>;
+using vvs = vector<vs>;
+using vvc = vector<vc>;
+using vvb = vector<vb>;
+using vvvi = vector<vvi>;
+using vvvll = vector<vvll>;
+using vvvb = vector<vvb>;
+using vpll = vector<pll>;
+using mi = map<int, int>;
+using mll = map<ll, ll>;
+using msi = map<string, int>;
+using msl = map<string, ll>;
+using mmi = map<int,mi>;
+using mml = map<ll,mll>;
+using Graph = vector<vector<ll>>;
+const string ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const string abc="abcdefghijklmnopqrstuvwxyz";
+#define gcd __gcd
+#define pb push_back
+template<class T> using pq = priority_queue<T>;
+template<class T> using pqr = priority_queue<T, vector<T>, greater<T>>;
+#define lb(v, k) (lower_bound((v).begin(), (v).end(), (k)) - v.begin())
+#define ub(v, k) (upper_bound((v).begin(), (v).end(), (k)) - v.begin())
+#define fi first
+#define se second
+#define elif else if
+#define updiv(n,x) (n + x - 1) / x
+#define rounddiv(n,x) (ll)((double)(n)/(double)(x)+0.5)
+#define fix(n) fixed << setprecision(n)
+#define _print(n) cout << " " << (n) << endl
+#define print_(n) cout << (n) << " "
+#define ioinit ios::sync_with_stdio(false);std::cin.tie(nullptr)
+template<class... T>
+constexpr auto min(T... a){
+    return min(initializer_list<common_type_t<T...>>{a...});
+}
+template<class... T>
+constexpr auto max(T... a){
+    return max(initializer_list<common_type_t<T...>>{a...});
+}
+template <typename T>
+inline bool chmax(T &a, T b) { return ((a < b) ? (a = b, true) : (false)); }
+template <typename T>
+inline bool chmin(T &a, T b) { return ((a > b) ? (a = b, true) : (false)); }
+const ll mod=998244353;
+const ll MOD=1000000007;
+const ld PI=3.141592653589793;
+const vll dx4={0,-1,0,1};
+const vll dy4={1,0,-1,0};
+const vll dx8={1,0,-1,0,1,-1,1,-1};
+const vll dy8={0,1,0,-1,1,-1,-1,1};
+const vll dx6={1,0,-1,0,1,-1};
+const vll dy6={0,1,0,-1,1,-1};
+const int inf = INT_MAX / 2;
+const ll INF= 1LL << 60;
+// Union-Find
+struct UnionFind {
+    vector<long long> par, rank, siz;
+    // 構造体の初期化
+    UnionFind(int n) : par(n,-1), rank(n,0), siz(n,1) { }
+    // 根を求める
+    int root(int x) {
+        if (par[x]==-1) return x; // x が根の場合は x を返す
+        else return par[x] = root(par[x]); // 経路圧縮
+    }
+    // x と y が同じグループに属するか (= 根が一致するか)
+    bool same(int x, int y) {
+        return root(x)==root(y);
+    }
+    // x を含むグループと y を含むグループを併合する
+    bool unite(int x, int y) {
+        int rx = root(x), ry = root(y); // x 側と y 側の根を取得する
+        if (rx==ry) return false; // すでに同じグループのときは何もしない
+        // union by rank
+        if (rank[rx]<rank[ry]) swap(rx, ry); // ry 側の rank が小さくなるようにする
+        par[ry] = rx; // ry を rx の子とする
+        if (rank[rx]==rank[ry]) rank[rx]++; // rx 側の rank を調整する
+        siz[rx] += siz[ry]; // rx 側の siz を調整する
+        return true;
+    }
+    // x を含む根付き木のサイズを求める
+    int size(int x) {
+        return siz[root(x)];
+    }
+};
+// BIT
+template <class Abel> struct BIT {
+    Abel UNITY_SUM = 0;
+    vector<Abel> dat[2];
+
+    // [0, n)
+    BIT(int n, Abel unity = 0) : UNITY_SUM(unity) {
+        init(n);
+    }
+    void init(int n) {
+        for (int iter = 0; iter < 2; ++iter)
+            dat[iter].assign(n + 1, UNITY_SUM);
+    }
+    
+    // [a, b), a and b are 0-indexed
+    inline void sub_add(int p, int a, Abel x) {
+        for (int i = a; i < (int)dat[p].size(); i |= i + 1)
+            dat[p][i] = dat[p][i] + x;
+    }
+    inline void add(int a, int b, Abel x) {
+        sub_add(0, a, x * (-a));
+        sub_add(1, a, x);
+        sub_add(0, b, x * b);
+        sub_add(1, b, x * (-1));
+    }
+    
+    // [a, b), a and b are 0-indexed
+    inline Abel sub_sum(int p, int a) {
+        Abel res = UNITY_SUM;
+        for (int i = a - 1; i >= 0; i = (i & (i + 1)) - 1)
+            res = res + dat[p][i];
+        return res;
+    }
+    inline Abel sum(int a, int b) {
+        return sub_sum(0, b)
+            + sub_sum(1, b) * b
+            - sub_sum(0, a)
+            - sub_sum(1, a) * a;
+    }
+    
+    // debug
+    void printall() {
+        for (int i = 0; i < (int)dat[0].size(); ++i)
+            cout << sum(i, i + 1) << ",";
+        cout << endl;
+    }
+
+};
+
+signed main(){
+    inl(n);
+    vll h(n);
+    input(h);
+    vll ans(n+2,INF);
+    ans[0]=0;
+    rep(i,n){
+        chmin(ans[i+1],ans[i]+abs(h[i+1]-h[i]));
+        chmin(ans[i+2],ans[i]+abs(h[i+2]-h[i]));
+    }
+    print(ans[n-1]);
+}
