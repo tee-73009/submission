@@ -1,0 +1,609 @@
+#include<bits/stdc++.h>
+using namespace std;
+#if __has_include(<atcoder/all>)
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
+using Mint = modint1000000007;
+using vm = vector<mint>;
+using vvm = vector<vm>;
+using vM = vector<Mint>;
+using vvM = vector<vM>;
+//998244353_in
+istream &operator>>(istream &a, mint &b){
+    long long tmp;
+    a >> tmp;
+    b = tmp;
+    return a;
+}
+//998244353_out
+ostream &operator<<(ostream &a, const mint &b){
+    a << b.val();
+    return a;
+}
+//1000000007_in
+istream &operator>>(istream &a, Mint &b){
+    long long tmp;
+    a >> tmp;
+    b = tmp;
+    return a;
+}
+//1000000007_out
+ostream &operator<<(ostream &a, const Mint &b){
+    a << b.val();
+    return a;
+}
+#endif
+//pair_out
+template <typename T, typename U>
+ostream &operator<<(ostream &os, const pair<T, U> &p) {
+    os << p.first << " " << p.second;
+    return os;
+}
+//pair_in
+template <typename T, typename U>
+istream &operator>>(istream &is, pair<T, U> &p) {
+    is >> p.first >> p.second;
+    return is;
+}
+//vector_out
+template <typename T>
+ostream &operator<<(ostream &os, const vector<T> &v) {
+    int s = (int)v.size();
+    for (int i = 0; i < s; i++) os << (i ? " " : "") << v[i];
+    return os;
+}
+//vector_in
+template <typename T>
+istream &operator>>(istream &is, vector<T> &v) {
+    for (auto &x : v) is >> x;
+    return is;
+}
+//__int128_t_in
+istream &operator>>(istream &is, __int128_t &x) {
+    string S;
+    is >> S;
+    x = 0;
+    int flag = 0;
+    for (auto &c : S) {
+        if (c == '-') {
+            flag = true;
+            continue;
+        }
+        x *= 10;
+        x += c - '0';
+    }
+    if (flag) x = -x;
+    return is;
+}
+//__uint128_t_in
+istream &operator>>(istream &is, __uint128_t &x) {
+    string S;
+    is >> S;
+    x = 0;
+    for (auto &c : S) {
+        x *= 10;
+        x += c - '0';
+    }
+    return is;
+}
+//__int128_t_out
+ostream &operator<<(ostream &os, __int128_t x) {
+    if (x == 0) return os << 0;
+    if (x < 0) os << '-', x = -x;
+    string S;
+    while (x) S.push_back('0' + x % 10), x /= 10;
+    reverse(begin(S), end(S));
+    return os << S;
+}
+//__uint128_t_out
+ostream &operator<<(ostream &os, __uint128_t x) {
+    if (x == 0) return os << 0;
+    string S;
+    while (x) S.push_back('0' + x % 10), x /= 10;
+    reverse(begin(S), end(S));
+    return os << S;
+}
+//vector<vector>_out
+template <typename T>
+ostream &operator<<(ostream &os, const vector<vector<T>> &v)
+{
+    for (int i = 0; i < (int)v.size(); i++)
+    {
+        os << v[i] << endl;
+    }
+    return os;
+}
+//vector<vector<vector>>_out
+template <typename T>
+ostream &operator<<(ostream &os, const vector<vector<vector<T>>> &v)
+{
+    for (int i = 0; i < (int)v.size(); i++)
+    {
+        os << "i = " << i << endl;
+        os << v[i];
+    }
+    return os;
+}
+//map_out
+template <typename T, typename S>
+ostream &operator<<(ostream &os, const map<T, S> &m)
+{
+    for (auto &[key, val] : m)
+    {
+        os << key << ":" << val << " ";
+    }
+    return os;
+}
+//set_out
+template <typename T>
+ostream &operator<<(ostream &os, const set<T> &st)
+{
+    auto itr = st.begin();
+    for (int i = 0; i < (int)st.size(); i++)
+    {
+        os << *itr << (i + 1 != (int)st.size() ? " " : "");
+        itr++;
+    }
+    return os;
+}
+//multiset_out
+template <typename T>
+ostream &operator<<(ostream &os, const multiset<T> &st)
+{
+    auto itr = st.begin();
+    for (int i = 0; i < (int)st.size(); i++)
+    {
+        os << *itr << (i + 1 != (int)st.size() ? " " : "");
+        itr++;
+    }
+    return os;
+}
+//queue_out
+template <typename T>
+ostream &operator<<(ostream &os, const queue<T> &q_)
+{
+    auto q = q_;
+    while (!q.empty())
+    {
+        os << q.front() << " ";
+        q.pop();
+    }
+    return os;
+}
+//deque_out
+template <typename T>
+ostream &operator<<(ostream &os, deque<T> q)
+{
+    while (q.size())
+    {
+        os << q.front() << " ";
+        q.pop_front();
+    }
+    return os;
+}
+//stack_out
+template <typename T>
+ostream &operator<<(ostream &os, const stack<T> &st_)
+{
+    auto st = st_;
+    while (!st.empty())
+    {
+        os << st.top() << " ";
+        st.pop();
+    }
+    return os;
+}
+//priority_queue_out
+template <class T, class Container, class Compare>
+ostream &operator<<(ostream &os, const priority_queue<T, Container, Compare> &pq_)
+{
+    auto pq = pq_;
+    while (!pq.empty())
+    {
+        os << pq.top() << " ";
+        pq.pop();
+    }
+    return os;
+}
+#define ini(...) int __VA_ARGS__; input(__VA_ARGS__);
+#define inl(...) long long __VA_ARGS__; input(__VA_ARGS__);
+#define ins(...) string __VA_ARGS__; input(__VA_ARGS__);
+#define inc(...) char __VA_ARGS__; input(__VA_ARGS__);
+#define ing(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);name[b].pb(a);}
+#define ing_on(name,size,n) Graph name(size); rep(i,n){inl(a,b);a--;b--;name[a].pb(b);}//有向
+#define ing_cost(name,size,n) Graph_cost name(size); rep(i,n){inl(a,b,c);a--;b--;name[a].pb({b,c});name[b].pb({a,c});}//コスト付き
+#define in1(s) for (int i = 0; i < (int)s.size();i++) input(s[i]);
+#define in2(s, t) for (int i = 0; i < (int)s.size(); i++) input(s[i], t[i]);
+#define in3(s, t, u) for (int i = 0; i < (int)s.size(); i++) input(s[i], t[i], u[i]);
+#define in4(s, t, u, v) for (int i = 0; i < (int)s.size(); i++) input(s[i], t[i], u[i], v[i]);
+void input() {}
+template <typename T, class... U>
+void input(T &t, U &...u) {
+    cin >> t;
+    input(u...);
+}
+void print() { cout << "\n"; }
+template <typename T, class... U, char sep = ' '>
+void print(const T &t, const U &...u) {
+    cout << t;
+    if (sizeof...(u)) cout << sep;
+    print(u...);
+}
+#define OVERLOAD_3(_1, _2, _3, name, ...) name
+#define REP1(i, n) for (auto i = std::decay_t<decltype(n)>{}; (i) < (n); ++(i))
+#define REP2(i, l, r) for (auto i = (l); (i) < (r); ++(i))
+#define rep(...) OVERLOAD_3(__VA_ARGS__, REP2, REP1)(__VA_ARGS__)
+#define RREP1(i, n) for (auto i = (n); (i) != (std::decay_t<decltype(n)>{}); --(i))
+#define RREP2(i, l, r) for (auto i = (l); (i) != (r); --(i))
+#define rrep(...) OVERLOAD_3(__VA_ARGS__, RREP2, RREP1)(__VA_ARGS__)
+#define rep_(i,a) rep(i,a.size())
+#define all(x) std::begin(x), std::end(x)
+#define rall(x) std::rbegin(x), std::rend(x)
+#define yesno(T) if(T){cout<<"yes"<<endl;}else{cout<<"no"<<endl;}
+#define YesNo(T) if(T){cout<<"Yes"<<endl;}else{cout<<"No"<<endl;}
+#define YESNO(T) if(T){cout<<"YES"<<endl;}else{cout<<"NO"<<endl;}
+#define fin(...) ({print(__VA_ARGS__); return 0; })
+#define break_with(...) ({ __VA_ARGS__; break; })
+#define continue_with(...) ({ __VA_ARGS__; continue; })
+using ll=long long;
+using ld=long double;
+using ull=unsigned long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using vi = vector<int>;
+using vll = vector<long long>;
+using vs = vector<string>;
+using vc = vector<char>;
+using vb = vector<bool>;
+using vvi = vector<vi>;
+using vvll = vector<vll>;
+using vvs = vector<vs>;
+using vvc = vector<vc>;
+using vvb = vector<vb>;
+using vvvi = vector<vvi>;
+using vvvll = vector<vvll>;
+using vvvb = vector<vvb>;
+using vpll = vector<pll>;
+using mi = map<int, int>;
+using mll = map<ll, ll>;
+using msi = map<string, int>;
+using msl = map<string, ll>;
+using mmi = map<int,mi>;
+using mml = map<ll,mll>;
+using Graph = vector<vector<ll>>;
+const string ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const string abc="abcdefghijklmnopqrstuvwxyz";
+#define gcd __gcd
+#define pb push_back
+template<class T> using pq = priority_queue<T>;
+template<class T> using pqr = priority_queue<T, vector<T>, greater<T>>;
+#define lb(v, k) (lower_bound((v).begin(), (v).end(), (k)) - v.begin())
+#define ub(v, k) (upper_bound((v).begin(), (v).end(), (k)) - v.begin())
+#define fi first
+#define se second
+#define elif else if
+#define updiv(n,x) (n + x - 1) / x
+#define rounddiv(n,x) (ll)((double)(n)/(double)(x)+0.5)
+#define fix(n) fixed << setprecision(n)
+#define _print(n) cout << " " << (n) << endl
+#define print_(n) cout << (n) << " "
+#define ioinit ios::sync_with_stdio(false);std::cin.tie(nullptr)
+template<class T, class... Ts>
+constexpr T mn(T a, Ts... b) {
+    return std::min({a, b...});
+}
+template<class T, class... Ts>
+constexpr T mx(T a, Ts... b) {
+    return std::max({a, b...});
+}
+template <typename T>
+inline bool chmax(T &a, T b) { return ((a < b) ? (a = b, true) : (false)); }
+template <typename T>
+inline bool chmin(T &a, T b) { return ((a > b) ? (a = b, true) : (false)); }
+const ll mod=998244353;
+const ll MOD=1000000007;
+const ld PI=3.141592653589793;
+const vll dx4={0,-1,0,1};
+const vll dy4={1,0,-1,0};
+const vll dx8={1,0,-1,0,1,-1,1,-1};
+const vll dy8={0,1,0,-1,1,-1,-1,1};
+const vll dx6={1,0,-1,0,1,-1};
+const vll dy6={0,1,0,-1,1,-1};
+const int inf = INT_MAX / 2;
+const ll INF= 1LL << 60;
+// Union-Find
+struct UnionFind {
+    vector<long long> par, rank, siz;
+    // 構造体の初期化
+    UnionFind(int n) : par(n,-1), rank(n,0), siz(n,1) { }
+    // 根を求める
+    int root(int x) {
+        if (par[x]==-1) return x; // x が根の場合は x を返す
+        else return par[x] = root(par[x]); // 経路圧縮
+    }
+    // x と y が同じグループに属するか (= 根が一致するか)
+    bool same(int x, int y) {
+        return root(x)==root(y);
+    }
+    // x を含むグループと y を含むグループを併合する
+    bool unite(int x, int y) {
+        int rx = root(x), ry = root(y); // x 側と y 側の根を取得する
+        if (rx==ry) return false; // すでに同じグループのときは何もしない
+        // union by rank
+        if (rank[rx]<rank[ry]) swap(rx, ry); // ry 側の rank が小さくなるようにする
+        par[ry] = rx; // ry を rx の子とする
+        if (rank[rx]==rank[ry]) rank[rx]++; // rx 側の rank を調整する
+        siz[rx] += siz[ry]; // rx 側の siz を調整する
+        return true;
+    }
+    // x を含む根付き木のサイズを求める
+    int size(int x) {
+        return siz[root(x)];
+    }
+};
+// BIT
+template <class Abel> struct BIT {
+    Abel UNITY_SUM = 0;
+    vector<Abel> dat[2];
+
+    // [0, n)
+    BIT(int n, Abel unity = 0) : UNITY_SUM(unity) {
+        init(n);
+    }
+    void init(int n) {
+        for (int iter = 0; iter < 2; ++iter)
+            dat[iter].assign(n + 1, UNITY_SUM);
+    }
+    
+    // [a, b), a and b are 0-indexed
+    inline void sub_add(int p, int a, Abel x) {
+        for (int i = a; i < (int)dat[p].size(); i |= i + 1)
+            dat[p][i] = dat[p][i] + x;
+    }
+    inline void add(int a, int b, Abel x) {
+        sub_add(0, a, x * (-a));
+        sub_add(1, a, x);
+        sub_add(0, b, x * b);
+        sub_add(1, b, x * (-1));
+    }
+    
+    // [a, b), a and b are 0-indexed
+    inline Abel sub_sum(int p, int a) {
+        Abel res = UNITY_SUM;
+        for (int i = a - 1; i >= 0; i = (i & (i + 1)) - 1)
+            res = res + dat[p][i];
+        return res;
+    }
+    inline Abel sum(int a, int b) {
+        return sub_sum(0, b)
+            + sub_sum(1, b) * b
+            - sub_sum(0, a)
+            - sub_sum(1, a) * a;
+    }
+    
+    // debug
+    void printall() {
+        for (int i = 0; i < (int)dat[0].size(); ++i)
+            cout << sum(i, i + 1) << ",";
+        cout << endl;
+    }
+
+};
+unsigned int randInt() {
+    static unsigned int tx = 123456789, ty=362436069, tz=521288629, tw=88675123;
+    unsigned int tt = (tx^(tx<<11));
+    tx = ty; ty = tz; tz = tw;
+    return ( tw=(tw^(tw>>19))^(tt^(tt>>8)) );
+}
+// montgomery modint (MOD < 2^62, MOD is odd)
+struct fastmodint {
+    using mint = fastmodint;
+    using u64 = uint64_t;
+    using u128 = __uint128_t;
+    
+    // static menber
+    static u64 MOD;
+    static u64 INV_MOD;  // INV_MOD * MOD ≡ 1 (mod 2^64)
+    static u64 T128;  // 2^128 (mod MOD)
+    
+    // inner value
+    u64 val;
+    
+    // constructor
+    fastmodint() : val(0) { }
+    fastmodint(long long v) : val(reduce((u128(v) + MOD) * T128)) { }
+    u64 get() const {
+        u64 res = reduce(val);
+        return res >= MOD ? res - MOD : res;
+    }
+    
+    // mod getter and setter
+    static u64 get_mod() { return MOD; }
+    static void set_mod(u64 mod) {
+        assert(mod < (1LL << 62));
+        assert((mod & 1));
+        MOD = mod;
+        T128 = -u128(mod) % mod;
+        INV_MOD = get_inv_mod();
+    }
+    static u64 get_inv_mod() {
+        u64 res = MOD;
+        for (int i = 0; i < 5; ++i) res *= 2 - MOD * res;
+        return res;
+    }
+    static u64 reduce(const u128 &v) {
+        return (v + u128(u64(v) * u64(-INV_MOD)) * MOD) >> 64;
+    }
+    
+    // arithmetic operators
+    mint operator - () const { return mint() - mint(*this); }
+    mint operator + (const mint &r) const { return mint(*this) += r; }
+    mint operator - (const mint &r) const { return mint(*this) -= r; }
+    mint operator * (const mint &r) const { return mint(*this) *= r; }
+    mint operator / (const mint &r) const { return mint(*this) /= r; }
+    mint& operator += (const mint &r) {
+        if ((val += r.val) >= 2 * MOD) val -= 2 * MOD;
+        return *this;
+    }
+    mint& operator -= (const mint &r) {
+        if ((val += 2 * MOD - r.val) >= 2 * MOD) val -= 2 * MOD;
+        return *this;
+    }
+    mint& operator *= (const mint &r) {
+        val = reduce(u128(val) * r.val);
+        return *this;
+    }
+    mint& operator /= (const mint &r) {
+        *this *= r.inv();
+        return *this;
+    }
+    mint inv() const { return pow(MOD - 2); }
+    mint pow(u128 n) const {
+        mint res(1), mul(*this);
+        while (n > 0) {
+            if (n & 1) res *= mul;
+            mul *= mul;
+            n >>= 1;
+        }
+        return res;
+    }
+
+    // other operators
+    bool operator == (const mint &r) const {
+        return (val >= MOD ? val - MOD : val) == (r.val >= MOD ? r.val - MOD : r.val);
+    }
+    bool operator != (const mint &r) const {
+        return (val >= MOD ? val - MOD : val) != (r.val >= MOD ? r.val - MOD : r.val);
+    }
+    friend istream& operator >> (istream &is, mint &x) {
+        long long t;
+        is >> t;
+        x = mint(t);
+        return is;
+    }
+    friend ostream& operator << (ostream &os, const mint &x) {
+        return os << x.get();
+    }
+    friend mint modpow(const mint &r, long long n) {
+        return r.pow(n);
+    }
+    friend mint modinv(const mint &r) {
+        return r.inv();
+    }
+};
+typename fastmodint::u64
+fastmodint::MOD, fastmodint::INV_MOD, fastmodint::T128;
+    // Miller-Rabin
+bool MillerRabin(long long N, vector<long long> A) {
+    using mint = fastmodint;
+    mint::set_mod(N);
+    
+    long long s = 0, d = N - 1;
+    while (d % 2 == 0) {
+        ++s;
+        d >>= 1;
+    }
+    for (auto a : A) {
+        if (N <= a) return true;
+        mint x = mint(a).pow(d);
+        if (x != 1) {
+            long long t;
+            for (t = 0; t < s; ++t) {
+                if (x == N - 1) break;
+                x *= x;
+            }
+            if (t == s) return false;
+        }
+    }
+    return true;
+}
+
+bool is_prime(long long N) {
+    if (N <= 1) return false;
+    else if (N == 2) return true;
+    else if (N % 2 == 0) return false;
+    else if (N < 4759123141LL)
+        return MillerRabin(N, {2, 7, 61});
+    else
+        return MillerRabin(N, {2, 325, 9375, 28178, 450775, 9780504, 1795265022});
+}
+long long pollard(long long N) {
+    if (N % 2 == 0) return 2;
+    if (is_prime(N)) return N;
+    
+    using mint = fastmodint;
+    mint::set_mod(N);
+    
+    long long step = 0;
+    while (true) {
+        mint r = randInt();  // random r
+        auto f = [&](mint x) -> mint { return x * x + r; };
+        mint x = ++step, y = f(x);
+        while (true) {
+            long long p = gcd((y - x).get(), (uint64_t)N);
+            if (p == 0 || p == N) break;
+            if (p != 1) return p;
+            x = f(x);
+            y = f(f(y));
+        }
+    }
+}
+
+vector<long long> prime_factorize(long long N) {
+    if (N == 1) return {};
+    long long p = pollard(N);
+    if (p == N) return {p};
+    vector<long long> left = prime_factorize(p);
+    vector<long long> right = prime_factorize(N / p);
+    left.insert(left.end(), right.begin(), right.end());
+    sort(left.begin(), left.end());
+    return left;
+}
+vll divisor(ll n){
+    vll ret;
+    for(ll i = 1 ; i*i <= n ; ++i){
+        if(n%i == 0){
+            ret.pb(i);
+            if(i*i != n){
+                ret.pb(n/i);
+            }
+        }
+    }
+    return ret;
+}
+vll fact(1),fact_inv(1),inv(1);
+void init_nCk(int SIZE,int Mod) {
+    fact.resize(SIZE + 5);
+    fact_inv.resize(SIZE + 5);
+    inv.resize(SIZE + 5);
+    fact[0] = fact[1] = 1;
+    fact_inv[0] = fact_inv[1] = 1;
+    inv[1] = 1;
+    for (int i = 2; i < SIZE + 5; i++) {
+        fact[i] = fact[i - 1] * i % Mod;
+        inv[i] = Mod - inv[Mod % i] * (Mod / i) % Mod;
+        fact_inv[i] = fact_inv[i - 1] * inv[i] % Mod;
+    }
+}
+signed main(){
+    inl(n,a,b,c);
+    vll A(n+1),B(n+1),C(n+1);
+    rep(i,n+1){
+        if(i%a==0) A[i]++;
+        if(i%b==0) B[i]++;
+        if(i%c==0) C[i]++;
+    }
+    vll AB=convolution<mod>(A,B);
+    vll ABC=convolution<mod>(AB,C);
+    print(ABC[n]);
+    init_nCk(n+1,mod);
+    rep(i,n+1){
+        if(A[i]>0) A[i]=fact_inv[i];
+        if(B[i]>0) B[i]=fact_inv[i];
+        if(C[i]>0) C[i]=fact_inv[i];
+    }
+    vll AB2=convolution<mod>(A,B);
+    vll ABC2=convolution<mod>(AB2,C);
+    print((ABC2[n]*fact[n])%mod);
+}
