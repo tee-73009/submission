@@ -395,17 +395,21 @@ signed main(){
     inl(n);
     vll a(n);
     input(a);
-    vvll b(n);
-    rep(i,n) b[a[i]-1].pb(i);
+    rep(i,n) a[i]--;
+    vll l(n),r(n);
+    rep(i,1,n) r[a[i]]++;
+    ll t=0;
     ll ans=0;
-    rep(i,n){
-        ll s=b[i].size();
-        if(s==0) continue;
-        sort(all(b[i]));
-        rep(j,b[i].size()){
-            ans+=(1-s+2*j)*b[i][j];
-        }
-        ans-=(s-1)*s*(s+1)/6;
+    rep(i,1,n){
+        bool can=false;
+        if(a[i-1]==a[i]) can=true;
+        t-=(l[a[i-1]]*r[a[i-1]]+l[a[i]]*r[a[i]]-l[a[i-1]]*r[a[i-1]]);
+        if(can) t+=l[a[i]]*r[a[i]];
+        l[a[i-1]]++;
+        r[a[i]]--;
+        t+=(l[a[i-1]]*r[a[i-1]]+l[a[i]]*r[a[i]]-l[a[i]]*r[a[i]]);
+        if(can) t-=l[a[i]]*r[a[i]];
+        ans+=t;
     }
     print(ans);
 }
