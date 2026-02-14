@@ -404,12 +404,12 @@ signed main(){
         inl(t,v);
         v--;
         if(t==1){
-            queue<ll> s;
+            stack<ll> s;
             if(can[v]) continue;
             can[v]=true;
             s.push(v);
             while(!(s.empty())){
-                ll t=s.front();
+                ll t=s.top();
                 s.pop();
                 for(auto x:g[t]){
                     if(can[x]) continue;
