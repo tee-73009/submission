@@ -1,3 +1,4 @@
+#include "atcoder/scc.hpp"
 #include<bits/stdc++.h>
 using namespace std;
 #if __has_include(<atcoder/all>)
@@ -9,6 +10,31 @@ using vm = vector<mint>;
 using vvm = vector<vm>;
 using vM = vector<Mint>;
 using vvM = vector<vM>;
+//998244353_in
+istream &operator>>(istream &a, mint &b){
+    long long tmp;
+    a >> tmp;
+    b = tmp;
+    return a;
+}
+//998244353_out
+ostream &operator<<(ostream &a, const mint &b){
+    a << b.val();
+    return a;
+}
+//1000000007_in
+istream &operator>>(istream &a, Mint &b){
+    long long tmp;
+    a >> tmp;
+    b = tmp;
+    return a;
+}
+//1000000007_out
+ostream &operator<<(ostream &a, const Mint &b){
+    a << b.val();
+    return a;
+}
+#endif
 //pair_out
 template <typename T, typename U>
 ostream &operator<<(ostream &os, const pair<T, U> &p) {
@@ -136,9 +162,10 @@ ostream &operator<<(ostream &os, const multiset<T> &st)
 }
 //queue_out
 template <typename T>
-ostream &operator<<(ostream &os, queue<T> q)
+ostream &operator<<(ostream &os, const queue<T> &q_)
 {
-    while (q.size())
+    auto q = q_;
+    while (!q.empty())
     {
         os << q.front() << " ";
         q.pop();
@@ -158,9 +185,10 @@ ostream &operator<<(ostream &os, deque<T> q)
 }
 //stack_out
 template <typename T>
-ostream &operator<<(ostream &os, stack<T> st)
+ostream &operator<<(ostream &os, const stack<T> &st_)
 {
-    while (st.size())
+    auto st = st_;
+    while (!st.empty())
     {
         os << st.top() << " ";
         st.pop();
@@ -169,41 +197,16 @@ ostream &operator<<(ostream &os, stack<T> st)
 }
 //priority_queue_out
 template <class T, class Container, class Compare>
-ostream &operator<<(ostream &os, priority_queue<T, Container, Compare> pq)
+ostream &operator<<(ostream &os, const priority_queue<T, Container, Compare> &pq_)
 {
-    while (pq.size())
+    auto pq = pq_;
+    while (!pq.empty())
     {
         os << pq.top() << " ";
         pq.pop();
     }
     return os;
 }
-#if __has_include(<atcoder/all>)
-//998244353_in
-istream &operator>>(istream &a, mint &b){
-    long long tmp;
-    a >> tmp;
-    b = tmp;
-    return a;
-}
-//998244353_out
-ostream &operator<<(ostream &a, mint &b){
-    a << b.val();
-    return a;
-}
-//1000000007_in
-istream &operator>>(istream &a, Mint &b){
-    long long tmp;
-    a >> tmp;
-    b = tmp;
-    return a;
-}
-//1000000007_out
-ostream &operator<<(ostream &a, Mint &b){
-    a << b.val();
-    return a;
-}
-#endif
 #define ini(...) int __VA_ARGS__; input(__VA_ARGS__);
 #define inl(...) long long __VA_ARGS__; input(__VA_ARGS__);
 #define ins(...) string __VA_ARGS__; input(__VA_ARGS__);
@@ -228,7 +231,6 @@ void print(const T &t, const U &...u) {
     if (sizeof...(u)) cout << sep;
     print(u...);
 }
-#endif
 #define OVERLOAD_3(_1, _2, _3, name, ...) name
 #define REP1(i, n) for (auto i = std::decay_t<decltype(n)>{}; (i) < (n); ++(i))
 #define REP2(i, l, r) for (auto i = (l); (i) < (r); ++(i))
@@ -288,13 +290,13 @@ template<class T> using pqr = priority_queue<T, vector<T>, greater<T>>;
 #define _print(n) cout << " " << (n) << endl
 #define print_(n) cout << (n) << " "
 #define ioinit ios::sync_with_stdio(false);std::cin.tie(nullptr)
-template<class... T>
-constexpr auto min(T... a){
-    return min(initializer_list<common_type_t<T...>>{a...});
+template<class T, class... Ts>
+constexpr T mn(T a, Ts... b) {
+    return std::min({a, b...});
 }
-template<class... T>
-constexpr auto max(T... a){
-    return max(initializer_list<common_type_t<T...>>{a...});
+template<class T, class... Ts>
+constexpr T mx(T a, Ts... b) {
+    return std::max({a, b...});
 }
 template <typename T>
 inline bool chmax(T &a, T b) { return ((a < b) ? (a = b, true) : (false)); }
@@ -387,8 +389,9 @@ template <class Abel> struct BIT {
             cout << sum(i, i + 1) << ",";
         cout << endl;
     }
+
 };
-int main() {
+signed main(){
     inl(n);
     print(n*(n+1)/2);
 }
