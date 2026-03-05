@@ -321,16 +321,18 @@ signed main(){
     inl(x,y);
     vll a(n),b(n);
     in2(a,b);
-    vvvll dp(n+1,vvll(x+1,vll(y+1,INF)));
-    dp[0][0][0]=0;
+    vvll dp(x+1,vll(y+1,INF));
+    dp[0][0]=0;
     rep(i,n){
+        vvll dp2(x+1,vll(y+1,INF));
         rep(j,x+1){
             rep(k,y+1){
-                chmin(dp[i+1][j][k],dp[i][j][k]);
-                chmin(dp[i+1][min(x,j+a[i])][min(y,k+b[i])],dp[i][j][k]+1);
+                chmin(dp2[j][k],dp[j][k]);
+                chmin(dp2[min(x,j+a[i])][min(y,k+b[i])],dp[j][k]+1);
             }
         }
+        swap(dp,dp2);
     }
-    if(dp[n][x][y]==INF) print(-1);
-    else print(dp[n][x][y]);
+    if(dp[x][y]==INF) print(-1);
+    else print(dp[x][y]);
 }
