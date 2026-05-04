@@ -92,7 +92,7 @@ ostream &operator<<(ostream &os, __int128_t x) {
     if (x == 0) return os << 0;
     if (x < 0) os << '-', x = -x;
     string S;
-    while (x) S.push_back('0' + x % 10), x /= 10;
+    while (x) S.push_back(char('0' + x % 10)), x /= 10;
     reverse(begin(S), end(S));
     return os << S;
 }
@@ -100,7 +100,7 @@ ostream &operator<<(ostream &os, __int128_t x) {
 ostream &operator<<(ostream &os, __uint128_t x) {
     if (x == 0) return os << 0;
     string S;
-    while (x) S.push_back('0' + x % 10), x /= 10;
+    while (x) S.push_back(char('0' + x % 10)), x /= 10;
     reverse(begin(S), end(S));
     return os << S;
 }
@@ -230,6 +230,7 @@ void print(const T &t, const U &...u) {
     if (sizeof...(u)) cout << sep;
     print(u...);
 }
+#define debug(x) cerr << #x << " = " << (x) << " (L" << __LINE__ << ")" << endl
 #define OVERLOAD_3(_1, _2, _3, name, ...) name
 #define REP1(i, n) for (auto i = std::decay_t<decltype(n)>{}; (i) < (n); ++(i))
 #define REP2(i, l, r) for (auto i = (l); (i) < (r); ++(i))
@@ -274,7 +275,6 @@ using mml = map<ll,mll>;
 using Graph = vector<vector<ll>>;
 const string ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const string abc="abcdefghijklmnopqrstuvwxyz";
-#define gcd __gcd
 #define pb push_back
 template<class T> using pq = priority_queue<T>;
 template<class T> using pqr = priority_queue<T, vector<T>, greater<T>>;
@@ -301,111 +301,41 @@ template <typename T>
 inline bool chmax(T &a, T b) { return ((a < b) ? (a = b, true) : (false)); }
 template <typename T>
 inline bool chmin(T &a, T b) { return ((a > b) ? (a = b, true) : (false)); }
-const ll mod=998244353;
-const ll MOD=1000000007;
-const ld PI=3.141592653589793;
+template <class T>
+ll sum(const T &a) { return accumulate(all(a), 0LL); }
+constexpr ll mod=998244353;
+constexpr ll MOD=1000000007;
+constexpr ld PI=3.141592653589793;
 const vll dx4={0,-1,0,1};
 const vll dy4={1,0,-1,0};
 const vll dx8={1,0,-1,0,1,-1,1,-1};
 const vll dy8={0,1,0,-1,1,-1,-1,1};
 const vll dx6={1,0,-1,0,1,-1};
 const vll dy6={0,1,0,-1,1,-1};
-const int inf = INT_MAX / 2;
-const ll INF= 1LL << 60;
-// Union-Find
-struct UnionFind {
-    vector<long long> par, rank, siz;
-    // 構造体の初期化
-    UnionFind(int n) : par(n,-1), rank(n,0), siz(n,1) { }
-    // 根を求める
-    int root(int x) {
-        if (par[x]==-1) return x; // x が根の場合は x を返す
-        else return par[x] = root(par[x]); // 経路圧縮
-    }
-    // x と y が同じグループに属するか (= 根が一致するか)
-    bool same(int x, int y) {
-        return root(x)==root(y);
-    }
-    // x を含むグループと y を含むグループを併合する
-    bool unite(int x, int y) {
-        int rx = root(x), ry = root(y); // x 側と y 側の根を取得する
-        if (rx==ry) return false; // すでに同じグループのときは何もしない
-        // union by rank
-        if (rank[rx]<rank[ry]) swap(rx, ry); // ry 側の rank が小さくなるようにする
-        par[ry] = rx; // ry を rx の子とする
-        if (rank[rx]==rank[ry]) rank[rx]++; // rx 側の rank を調整する
-        siz[rx] += siz[ry]; // rx 側の siz を調整する
-        return true;
-    }
-    // x を含む根付き木のサイズを求める
-    int size(int x) {
-        return siz[root(x)];
-    }
-};
-// BIT
-template <class Abel> struct BIT {
-    Abel UNITY_SUM = 0;
-    vector<Abel> dat[2];
-
-    // [0, n)
-    BIT(int n, Abel unity = 0) : UNITY_SUM(unity) {
-        init(n);
-    }
-    void init(int n) {
-        for (int iter = 0; iter < 2; ++iter)
-            dat[iter].assign(n + 1, UNITY_SUM);
-    }
-    
-    // [a, b), a and b are 0-indexed
-    inline void sub_add(int p, int a, Abel x) {
-        for (int i = a; i < (int)dat[p].size(); i |= i + 1)
-            dat[p][i] = dat[p][i] + x;
-    }
-    inline void add(int a, int b, Abel x) {
-        sub_add(0, a, x * (-a));
-        sub_add(1, a, x);
-        sub_add(0, b, x * b);
-        sub_add(1, b, x * (-1));
-    }
-    
-    // [a, b), a and b are 0-indexed
-    inline Abel sub_sum(int p, int a) {
-        Abel res = UNITY_SUM;
-        for (int i = a - 1; i >= 0; i = (i & (i + 1)) - 1)
-            res = res + dat[p][i];
-        return res;
-    }
-    inline Abel sum(int a, int b) {
-        return sub_sum(0, b)
-            + sub_sum(1, b) * b
-            - sub_sum(0, a)
-            - sub_sum(1, a) * a;
-    }
-    
-    // debug
-    void printall() {
-        for (int i = 0; i < (int)dat[0].size(); ++i)
-            cout << sum(i, i + 1) << ",";
-        cout << endl;
-    }
-
-};
+constexpr int inf = INT_MAX / 2;
+constexpr ll INF= 1LL << 60;
+/*
+ラムダ式
+auto 関数名 = [&](引数の型1 引数名1, 引数の型2, 引数名2, ...) { 関数の処理 };
+function<返り値の型(引数の型1, 引数の型2, ...)> 関数名 = [&](引数の型1 引数名1, 引数の型2, 引数名2, ...) { 関数の処理 };
+*/
 signed main(){
-    ins(n);
+    ioinit;
+    ins(k);
     inl(d);
-    vvvll dp(n.size()+1,vvll(2,vll(d)));
-    dp[0][0][0]=1;
-    rep(i,n.size()){
-        rep(j,2){
-            rep(k,d){
-                rep(x,(j?10:(n[i]-'0')+1)){
-                    dp[i+1][j||x<(n[i]-'0')][(k+x)%d]+=dp[i][j][k];
-                    dp[i+1][j||x<(n[i]-'0')][(k+x)%d]%=MOD;
-                }
-            }
+    ll n=k.size();
+    vvvll dp(n+1,vvll(2,vll(d,-1)));
+    function<ll(ll,ll,ll)>f=[&](ll x,ll tight,ll r){//先頭からx桁定めたとき余りがrとなるもの(もしtight=1ならちょうど,0なら未満が確定)
+        if(dp[x][tight][r]!=-1) return dp[x][tight][r];
+        if(x==n) return dp[x][tight][r]=(r==0);
+        ll res=0;
+        ll limit=tight?(k[x]-'0'):9;
+        rep(i,limit+1){//次の桁iを順に回す(次の桁が付いた時の遷移を考える)
+            res+=f(x+1,tight&(i==limit),(r+i)%d);
+            res%=MOD;
         }
-    }
-    ll ans=dp[n.size()][0][0]+dp[n.size()][1][0]-1+MOD;
-    ans%=MOD;
-    print(ans);
+        dp[x][tight][r]=res;
+        return res;
+    };
+    print((f(0,1,0)-1+MOD)%MOD);//桁は定めないので0,ちょうどなのでtight=1,最後に0の1通りを引く
 }
