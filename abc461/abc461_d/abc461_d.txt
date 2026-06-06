@@ -349,8 +349,8 @@ signed main() {
     }
     ll ans=0;
     rep(i,h+1){
-        rep(j,i+1,h+1){
-            rep(k,w+1){
+        rep(k,w+1){
+            rep(j,i+1,h+1){
                 rep(l,k+1,w+1){
                     ans+=(a[j][l]+a[i][k]-a[i][l]-a[j][k]==K);
                 }
